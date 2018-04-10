@@ -1,0 +1,11 @@
+Felix Stein; Konstantin Schraubek; Dominik Schulze
+
+Anwendungsentwicklung HMTL/CSS/JavaScript Projekt 10.04.18
+
+Reaktionsmini Spiel
+
+ -Mehrere Kreise
+ -Ein Kreis ändert die Farbe, der soll so schnell wie möglich geklickt werden
+ -Reaktionszeit soll angezeigt werden
+ -(Single Kreis Reaktion)
+ 
