@@ -1,10 +1,10 @@
-src="http://code.jquery.com/jquery-latest.min.js" 
-type="text/javascript"
-src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"
-$(".hide").click(function() {
-    $(this).hide(200);    
+src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+
+$(document).ready(function () {
+    $("div").click(function () {
+        //$(this).fadeOut();
+        document.getElementsByClassName("hide").body.style.backgroundColor = "red";
+
+    });
 });
-$(".fade").click(function() {
-    $(this).fadeOut(300);  
-    $(this).fadeToggle("slow");  
-});
+

@@ -1,4 +1,5 @@
 {
      "git.path": "R:\\Programmierung\\Git_64bit\\bin\\git.exe",
-     "terminal.integrated.shell.windows": "R:\\Programmierung\\Git_64bit\\git-cmd.exe"
+     "terminal.integrated.shell.windows": "R:\\Programmierung\\Git_64bit\\git-cmd.exe",
+     "editor.formatOnSave": true
 }
