@@ -1,0 +1,5 @@
+
+{
+     git.path RProgrammierungGit_64bitbingit.exe,
+     terminal.integrated.shell.windows RProgrammierungGit_64bitgit-cmd.exe
+}
