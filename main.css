@@ -1,14 +1,7 @@
-@-webkit-keyframes blackWhite {  
-  0% { background-color: lightgrey; }
-  50% { background-color: lightgrey; }
-  51% { background-color: red; }
-  100% { background-color: red; }
-}
 body, html {
     height: 100%;
 }
-
-
+/* Wird nicht mehr gebraucht, wollte es nur nicht löschen weil es ja deins ist */
 .hide {
     background-color: lightgrey;
     position: absolute;
@@ -19,5 +12,15 @@ body, html {
     border: 1px solid black;
     text-align: center;
     border-radius: 100px;
+}
+
+#ReaktionsKreis {
+    background-color: #555;
+    position: relative;
+    top: 50px;
+    width: 250px;
+    height: 250px;
+    text-align: center;
+    border-radius: 125px;
 }
 

@@ -3,47 +3,72 @@
 
 <head>
     <meta charset="utf-8">
-    <script src="main.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="main.css">
+    <script src="jQuary3.3.1.js"></script>
+    <script src="main.js"></script>
+
+    <title>Reaktionstest</title>
 </head>
 
 <body>
 
     <div class="jumbotron text-center">
         <h1>Reaktionstest</h1>
-        <p>Testen Sie ihre Reaktionszeit </p>
+        <p>Testen Sie ihre Reaktionszeit! </p>
     </div>
+
     <div class="container m-4 pb-4 mx-auto">
 
         <div class="row" style="height:50px;">
-            <div class="col-2 bg-dark text-light">
+            <div class="col-2 bg-dark text-light pt-2">
                 <h4>Anleitung:</h4>
             </div>
             <div class=" col-8 bg-light">
                 <button type="button" id="StartButton" class="btn col-12 btn-dark">
-                   <h5> Start </h5>
+                    <h5> Start </h5>
                 </button>
             </div>
-            <div class="col-2 bg-info ">
+            <div class="col-2 bg-info text-dark pt-2">
                 <h4> Ihre Zeit: </h4>
             </div>
         </div>
+
+
         <div class="row" style="height:500px; ">
             <div class="col-2 bg-dark text-light">
-                <br> Drücken Sie den Start-Button. <br> Dann zählt es, sein Sie bereit den Kreis zu drücken! <br> Drücken
-                Sie in den Kreis sobald dieser seine Farbe ändert!
+                <br> Drücken Sie den Start-Button.
+                <br> Dann zählt es, sein Sie bereit den Kreis zu drücken!
+                <br> Drücken Sie in den Kreis sobald dieser seine Farbe ändert!
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br> Die
+                <b>Durchschnittliche</b> Reaktionszeit eines Menschen beträgt
+                <b>~215ms / 0,215s</b>.
             </div>
-            <div class="col-8 bg-light "></div>
-            <div class="col-2 bg-info "></div>
+            <div class="col-8 bg-light ">
+                <div class="mx-auto" id="ReaktionsKreis"></div>
+            </div>
+            <div class="col-2 bg-info " id="Zeiten"></div>
         </div>
+
+
         <div class="row" style="height:50px; ">
             <div class="col-2 bg-dark "></div>
-            <div class="col-8 bg-light "></div>
+            <div class="col-8 bg-light"></div>
             <div class="col-2 bg-info "></div>
         </div>
 
     </div>
 </body>
+
 
 </html>
