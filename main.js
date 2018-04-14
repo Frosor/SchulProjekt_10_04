@@ -1,15 +1,13 @@
-$(function () {
+$(function () { //Document Ready in Kurz
 
     var RandomStartReaktion = Math.floor((Math.random() * 3000));
 
-    function KreisFadeOut() {
+    function KreisChangeColor() {
         $("#ReaktionsKreis").css("background-color", "rgb(255, 0, 0)");
     }
 
-
-
     $("#StartButton").click(function () {
-        setTimeout(KreisFadeOut, RandomStartReaktion);
+        setTimeout(KreisChangeColor, RandomStartReaktion);
         $("#Zeiten").text(RandomStartReaktion);
 
 
