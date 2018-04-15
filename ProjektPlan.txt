@@ -4,8 +4,8 @@ Anwendungsentwicklung HMTL/CSS/JavaScript Projekt 10.04.18
 
 Reaktionsmini Spiel
 
- -Mehrere Kreise
- -Ein Kreis ändert die Farbe, der soll so schnell wie möglich geklickt werden
+ 
+ -Ein Kreis ï¿½ndert die Farbe, der soll so schnell wie mï¿½glich geklickt werden
  -Reaktionszeit soll angezeigt werden
- -(Single Kreis Reaktion)
+
  
