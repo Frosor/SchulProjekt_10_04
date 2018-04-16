@@ -6,6 +6,24 @@ $(function () { //Document Ready in Kurz
     var Trys = 0;
 
     $("#Leicht").prop("disabled", true);
+    $("#Leicht").toggleClass("btn-dark"); $("#Leicht").toggleClass("btn-outline-dark");
+
+    //Kreise Entfernen die sich im Speilfeld befinden
+    function KreiseEntfernen() {
+        $("#Spielfeld").empty();
+    }
+
+    //Div Container Removen; So werden immer die letzen 10 Versuche angezeigt
+    function DivRemove() {
+        var idremove = "zeit_div_" + (Trys - 10);
+        if (Trys >= 11) //Div Removen
+            $('#' + idremove).remove();
+    }
+
+    //Farbe des Kreises ändern
+    function KreisChangeColor() {
+        $(Kreis).css("background-color", "rgb(255, 255, 0)");
+    }
 
     function ReaktionMessen() {
         if (schwierigkeit == 1) {
@@ -25,23 +43,11 @@ $(function () { //Document Ready in Kurz
             var RandomStartReaktion = Math.floor((Math.random() * 4000));
         } while (RandomStartReaktion < 1000)
 
-        //Farbe des Kreises ändern
-        function KreisChangeColor() {
-            $(Kreis).css("background-color", "rgb(255, 255, 0)");
-        }
-
-        //Div Container Removen; So werden immer die letzen 10 Versuche angezeigt
-        function DivRemove() {
-            var idremove = "zeit_div_" + (Trys - 10);
-            if (Trys >= 11) //Div Removen
-                $('#' + idremove).remove();
-        }
+        //Genaue Zeit in ms andem die Farbe sich ändert
+        var ms = new Date().getTime() + RandomStartReaktion;
 
         //Farbe des Kreies ändern Nach Randomzeit zw. 1-4 Sekunden; In Varibale damit man diesen TimeOut später manuell stoppen kann
         var Timer = setTimeout(KreisChangeColor, RandomStartReaktion);
-
-        //Genaue Zeit in ms andem die Farbe sich ändert
-        var ms = new Date().getTime() + RandomStartReaktion;
 
         Trys++;
 
@@ -67,33 +73,13 @@ $(function () { //Document Ready in Kurz
         });
     }
 
-    $('#Normal').click(function () {
-        schwierigkeit = 2;
 
-        //erstellt 4 neue Kreise mit IDs und fügt diese dem Spielfeld an
-        var KreiseNormal = '<div id="wrapper"><div class="ReaktionsKreis2" id="ReaktionsKreis1"></div> <div class="ReaktionsKreis2" id="ReaktionsKreis2"></div>	<div class="ReaktionsKreis2" id="ReaktionsKreis3"></div> <div class="ReaktionsKreis2" id="ReaktionsKreis4"></div>';
-        $("#ReaktionsKreis0").remove();
-        $("#Spielfeld").append(KreiseNormal);
-
-
-        //blockt aktuellen Knopf und entsperrt andere Schwierigkeiten
-        $(this).prop("disabled", true);
-        $("#Leicht").prop("disabled", false);
-        $("#Schwer").prop("disabled", false);
-        $("#StartButton").prop("disabled", false);
-        //leert Zeiten und setzt Versuche zurück 
-        $("#Zeiten").empty();
-        Trys = 0;
-    });
 
     $('#Leicht').click(function () {
         schwierigkeit = 1;
+        //Entfernt alle Kreise die vorher im Spielfeld waren.
+        KreiseEntfernen();
 
-        //entfernt alle Kreise von Normal
-        $("#ReaktionsKreis1").remove();
-        $("#ReaktionsKreis2").remove();
-        $("#ReaktionsKreis3").remove();
-        $("#ReaktionsKreis4").remove();
         //erstellt neuen Kreis für Einfach
         var ReaktionsKreis0 = '<div style="top:50px;" class="ReaktionsKreis mx-auto" id="ReaktionsKreis0"></div>';
         $("#Spielfeld").append(ReaktionsKreis0);
@@ -109,9 +95,31 @@ $(function () { //Document Ready in Kurz
         Trys = 0;
     });
 
+    $('#Normal').click(function () {
+        schwierigkeit = 2;
+        //Entfernt alle Kreise die vorher im Spielfeld waren.
+        KreiseEntfernen();
+        //erstellt 4 neue Kreise mit IDs und fügt diese dem Spielfeld an
+        var KreiseNormal = '<div id="wrapper"><div class="ReaktionsKreis2" id="ReaktionsKreis1"></div> <div class="ReaktionsKreis2" id="ReaktionsKreis2"></div>	<div class="ReaktionsKreis2" id="ReaktionsKreis3"></div> <div class="ReaktionsKreis2" id="ReaktionsKreis4"></div>';
+        $("#Spielfeld").append(KreiseNormal);
+
+
+        //blockt aktuellen Knopf und entsperrt andere Schwierigkeiten
+        $(this).prop("disabled", true);
+        $("#Leicht").prop("disabled", false);
+        $("#Schwer").prop("disabled", false);
+        $("#StartButton").prop("disabled", false);
+        //leert Zeiten und setzt Versuche zurück 
+        $("#Zeiten").empty();
+        Trys = 0;
+    });
+
+
+
     $('#Schwer').click(function () {
         schwierigkeit = 3;
-
+        //Entfernt alle Kreise die vorher im Spielfeld waren.
+        KreiseEntfernen();
         //blockt aktuellen Knopf und entsperrt andere Schwierigkeiten
         $(this).prop("disabled", true);
         $("#Normal").prop("disabled", false);
