@@ -71,7 +71,7 @@ $(function () { //Document Ready in Kurz
         schwierigkeit = 2;
 
         //erstellt 4 neue Kreise mit IDs und fügt diese dem Spielfeld an
-        var KreiseNormal = '<div class="row"><div class="ReaktionsKreis2" id="ReaktionsKreis1"></div> <div class="ReaktionsKreis2" id="ReaktionsKreis2"></div></div>	<div class="row" style="margin: 0 auto;"><div class="ReaktionsKreis2" id="ReaktionsKreis3"></div> <div class="ReaktionsKreis2" id="ReaktionsKreis4"></div></div>';
+        var KreiseNormal = '<div id="wrapper"><div class="ReaktionsKreis2" id="ReaktionsKreis1"></div> <div class="ReaktionsKreis2" id="ReaktionsKreis2"></div>	<div class="ReaktionsKreis2" id="ReaktionsKreis3"></div> <div class="ReaktionsKreis2" id="ReaktionsKreis4"></div>';
         $("#ReaktionsKreis0").remove();
         $("#Spielfeld").append(KreiseNormal);
 

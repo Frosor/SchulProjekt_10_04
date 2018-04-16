@@ -16,5 +16,12 @@
     height: 200px;
     text-align: center;
     border-radius: 125px;
+    float: left;
+    top: 50px;
+}
+#wrapper
+{
+   margin: auto;
+   width: 302pt;
 }
 
