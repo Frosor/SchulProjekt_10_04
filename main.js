@@ -3,10 +3,11 @@ $(function () { //Document Ready in Kurz
     var schwierigkeit = 1;
     var Kreis;
 
-    var Trys = 0;
+    var spielfeld_leicht = '<div style="top:50px;" class="ReaktionsKreis mx-auto" id="ReaktionsKreis0"></div>';
+    var spielfeld_normal = '<div id="wrapper"><div class="m-1 ReaktionsKreis2" id="ReaktionsKreis1"></div> <div class="m-1 ReaktionsKreis2" id="ReaktionsKreis2"></div>	<div class="m-1 ReaktionsKreis2" id="ReaktionsKreis3"></div> <div class="m-1 ReaktionsKreis2" id="ReaktionsKreis4"></div></div>';
+    var spielfeld_schwer = '<div> Schwer Test Omg lul</div>';
 
-    $("#Leicht").prop("disabled", true);
-    $("#Leicht").toggleClass("btn-dark"); $("#Leicht").toggleClass("btn-outline-dark");
+    var Trys = 0;
 
     //Kreise Entfernen die sich im Speilfeld befinden
     function KreiseEntfernen() {
@@ -14,7 +15,7 @@ $(function () { //Document Ready in Kurz
     }
 
     //Div Container Removen; So werden immer die letzen 10 Versuche angezeigt
-    function DivRemove() {
+    function ZeitRemove() {
         var idremove = "zeit_div_" + (Trys - 10);
         if (Trys >= 11) //Div Removen
             $('#' + idremove).remove();
@@ -34,8 +35,10 @@ $(function () { //Document Ready in Kurz
             var randomKreis = Math.floor((Math.random() * 4) + 1);
             Kreis = "#ReaktionsKreis" + randomKreis;
         }
+
+
         //Start Button & Neuer Versuch Button disabln bis man in den Kreis geklickt hat.
-        $(this).prop("disabled", true);
+        $(this).off();
         $("#NeuerVersuch").prop("disabled", true);
 
         //Random Start Zeit nach Drücken des Start Buttons zwischen 1-4 Sekunden
@@ -56,87 +59,73 @@ $(function () { //Document Ready in Kurz
             var color = $(Kreis).css('background-color');
 
             if (color == "rgb(255, 255, 0)") {
-                DivRemove();
                 //Zeit in MS in die Zeiten Box; jewaliges div mit einer ID versehen damit man ein einzeln löschen kann wenn es zu viele werden
                 var id = "zeit_div_" + Trys;
                 $("#Zeiten").prepend("<div id=" + id + "> " + Trys + ". " + (new Date().getTime() - ms) + " ms. </div>");
             }
             if (color != "rgb(255, 255, 0)") {
-                DivRemove();
                 var id = "zeit_div_" + Trys;
                 $("#Zeiten").prepend("<div id=" + id + "> " + Trys + ". <b> Zu Früh! </b > <br></div>");
                 //setTimeOut Stoppen
                 clearTimeout(Timer);
             }
+            ZeitRemove();
             //Neuer Verusuch Button wieder aktivieren
             $("#NeuerVersuch").prop("disabled", false);
         });
     }
 
+    //SchwierigkeitsButtons, Farbe ändern wenn Aktiv / Nicht Aktiv
+    function Schwierigkeiten_Button_On_Off(event, An1, An2) {
+        $("#" + event.data.schwierigkeit).off();
+        $("#" + An1).on("click", { schwierigkeit: "" + An1 }, Spielfeld_Erstellen);
+        $("#" + An2).on("click", { schwierigkeit: "" + An2 }, Spielfeld_Erstellen);
 
+        $("#" + event.data.schwierigkeit).addClass("Not_Active_Button").removeClass("Active_Button");
+        $(".Not_Active_Button").removeClass("btn-outline-dark").addClass("btn-dark");
+        $(".Active_Button").removeClass("btn-dark").addClass("btn-outline-dark");
+        $("#" + An1).addClass("Active_Button").removeClass("Not_Active_Button");
+        $("#" + An2).addClass("Active_Button").removeClass("Not_Active_Button");
 
-    $('#Leicht').click(function () {
-        schwierigkeit = 1;
-        //Entfernt alle Kreise die vorher im Spielfeld waren.
+        $("#StartButton").on("click", ReaktionMessen);
+    }
+
+    //Erstellung des Jewaligen Spielfeldes, Je nach Schwierigkeit
+    function Spielfeld_Erstellen(event) {
+        if (event.data.schwierigkeit == "Leicht") {
+            schwierigkeit = 1;
+            spielfeld_aktuell = spielfeld_leicht;
+            Schwierigkeiten_Button_On_Off(event, "Normal", "Schwer");
+        }
+        else if (event.data.schwierigkeit == "Normal") {
+            schwierigkeit = 2;
+            spielfeld_aktuell = spielfeld_normal;
+            Schwierigkeiten_Button_On_Off(event, "Leicht", "Schwer");
+        }
+        else if (event.data.schwierigkeit == "Schwer") {
+            schwierigkeit = 3;
+            spielfeld_aktuell = spielfeld_schwer;
+            Schwierigkeiten_Button_On_Off(event, "Normal", "Leicht");
+        }
+
         KreiseEntfernen();
-
-        //erstellt neuen Kreis für Einfach
-        var ReaktionsKreis0 = '<div style="top:50px;" class="ReaktionsKreis mx-auto" id="ReaktionsKreis0"></div>';
-        $("#Spielfeld").append(ReaktionsKreis0);
-
-        //blockt aktuellen Knopf und entsperrt andere Schwierigkeiten
-        $(this).prop("disabled", true);
-        $("#Normal").prop("disabled", false);
-        $("#Schwer").prop("disabled", false);
-        $("#StartButton").prop("disabled", false);
-
-        //leert Zeiten und setzt Versuche zurück 
+        $("#Spielfeld").append(spielfeld_aktuell);
         $("#Zeiten").empty();
         Trys = 0;
-    });
-
-    $('#Normal').click(function () {
-        schwierigkeit = 2;
-        //Entfernt alle Kreise die vorher im Spielfeld waren.
-        KreiseEntfernen();
-        //erstellt 4 neue Kreise mit IDs und fügt diese dem Spielfeld an
-        var KreiseNormal = '<div id="wrapper"><div class="ReaktionsKreis2" id="ReaktionsKreis1"></div> <div class="ReaktionsKreis2" id="ReaktionsKreis2"></div>	<div class="ReaktionsKreis2" id="ReaktionsKreis3"></div> <div class="ReaktionsKreis2" id="ReaktionsKreis4"></div>';
-        $("#Spielfeld").append(KreiseNormal);
+    }
 
 
-        //blockt aktuellen Knopf und entsperrt andere Schwierigkeiten
-        $(this).prop("disabled", true);
-        $("#Leicht").prop("disabled", false);
-        $("#Schwer").prop("disabled", false);
-        $("#StartButton").prop("disabled", false);
-        //leert Zeiten und setzt Versuche zurück 
-        $("#Zeiten").empty();
-        Trys = 0;
-    });
+    //Schwierigkeitsbuttons Mit der Funkton Belegen
+    $("#Leicht").on("click", { schwierigkeit: "Leicht" }, Spielfeld_Erstellen);
+    $("#Normal").on("click", { schwierigkeit: "Normal" }, Spielfeld_Erstellen);
+    $("#Schwer").on("click", { schwierigkeit: "Schwer" }, Spielfeld_Erstellen);
 
-
-
-    $('#Schwer').click(function () {
-        schwierigkeit = 3;
-        //Entfernt alle Kreise die vorher im Spielfeld waren.
-        KreiseEntfernen();
-        //blockt aktuellen Knopf und entsperrt andere Schwierigkeiten
-        $(this).prop("disabled", true);
-        $("#Normal").prop("disabled", false);
-        $("#Leicht").prop("disabled", false);
-        $("#StartButton").prop("disabled", false);
-
-        //leert Zeiten und setzt Versuche zurück
-        $("#Zeiten").empty();
-        Trys = 0;
-    });
-
-
-    $("#StartButton").click(ReaktionMessen);
+    //Funktion auf den StartButton Legen // Initialzustand des Buttons festlegen / Inital, keine Funktion
+    $("#StartButton").off();
 
     //Start Button wieder Aktivierern + Farbe des Kreises wieder auf ursprung
     $("#NeuerVersuch").click(function () {
-        $("#StartButton").prop("disabled", false);
+        $("#StartButton").on("click", ReaktionMessen);
         $(Kreis).css("background-color", "rgb(85, 85, 85)");
     });
 
