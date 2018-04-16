@@ -1,13 +1,11 @@
 $(function () { //Document Ready in Kurz
 
-    var schwierigkeit = 1;
     var Kreis;
-
-    var spielfeld_leicht = '<div style="top:50px;" class="ReaktionsKreis mx-auto" id="ReaktionsKreis0"></div>';
-    var spielfeld_normal = '<div id="wrapper"><div class="m-1 ReaktionsKreis2" id="ReaktionsKreis1"></div> <div class="m-1 ReaktionsKreis2" id="ReaktionsKreis2"></div>	<div class="m-1 ReaktionsKreis2" id="ReaktionsKreis3"></div> <div class="m-1 ReaktionsKreis2" id="ReaktionsKreis4"></div></div>';
+    var Schwierigkeit_;
+    var Trys;
+    var spielfeld_leicht = '<div style="top:50px;" class="ReaktionsKreis mx-auto Kreis" id="ReaktionsKreis0"></div>';
+    var spielfeld_normal = '<div id="wrapper"><div class="ReaktionsKreis2 Kreis" id="ReaktionsKreis1"></div> <div class="ReaktionsKreis2 Kreis" id="ReaktionsKreis2"></div>	<div class="ReaktionsKreis2 Kreis" id="ReaktionsKreis3"></div> <div class="ReaktionsKreis2 Kreis" id="ReaktionsKreis4"></div></div>';
     var spielfeld_schwer = '<div> Schwer Test Omg lul</div>';
-
-    var Trys = 0;
 
     //Kreise Entfernen die sich im Speilfeld befinden
     function KreiseEntfernen() {
@@ -27,15 +25,14 @@ $(function () { //Document Ready in Kurz
     }
 
     function ReaktionMessen() {
-        if (schwierigkeit == 1) {
+        if (Schwierigkeit_ == "Leicht") {
             Kreis = "#ReaktionsKreis0";
         }
 
-        if (schwierigkeit == 2) {
+        if (Schwierigkeit_ == "Normal") {
             var randomKreis = Math.floor((Math.random() * 4) + 1);
             Kreis = "#ReaktionsKreis" + randomKreis;
         }
-
 
         //Start Button & Neuer Versuch Button disabln bis man in den Kreis geklickt hat.
         $(this).off();
@@ -54,14 +51,16 @@ $(function () { //Document Ready in Kurz
 
         Trys++;
 
-        $(Kreis).one("click", function () {
+        $(".Kreis").one("click", function () {
             //Aktuelle Farbe des Kreises am Moment des Klicks in eine Varibale speichern
-            var color = $(Kreis).css('background-color');
-
+            var color = $(this).css('background-color');
+            //Mehrfach klicken auch auf andere Kreise verhindern (Normal, Schwer)
+            $(".Kreis").off();
             if (color == "rgb(255, 255, 0)") {
                 //Zeit in MS in die Zeiten Box; jewaliges div mit einer ID versehen damit man ein einzeln löschen kann wenn es zu viele werden
                 var id = "zeit_div_" + Trys;
                 $("#Zeiten").prepend("<div id=" + id + "> " + Trys + ". " + (new Date().getTime() - ms) + " ms. </div>");
+                clearTimeout(Timer);
             }
             if (color != "rgb(255, 255, 0)") {
                 var id = "zeit_div_" + Trys;
@@ -69,6 +68,7 @@ $(function () { //Document Ready in Kurz
                 //setTimeOut Stoppen
                 clearTimeout(Timer);
             }
+            clearTimeout(Timer);
             ZeitRemove();
             //Neuer Verusuch Button wieder aktivieren
             $("#NeuerVersuch").prop("disabled", false);
@@ -93,18 +93,18 @@ $(function () { //Document Ready in Kurz
     //Erstellung des Jewaligen Spielfeldes, Je nach Schwierigkeit
     function Spielfeld_Erstellen(event) {
         if (event.data.schwierigkeit == "Leicht") {
-            schwierigkeit = 1;
             spielfeld_aktuell = spielfeld_leicht;
+            Schwierigkeit_ = event.data.schwierigkeit;
             Schwierigkeiten_Button_On_Off(event, "Normal", "Schwer");
         }
         else if (event.data.schwierigkeit == "Normal") {
-            schwierigkeit = 2;
             spielfeld_aktuell = spielfeld_normal;
+            Schwierigkeit_ = event.data.schwierigkeit;
             Schwierigkeiten_Button_On_Off(event, "Leicht", "Schwer");
         }
         else if (event.data.schwierigkeit == "Schwer") {
-            schwierigkeit = 3;
             spielfeld_aktuell = spielfeld_schwer;
+            Schwierigkeit_ = event.data.schwierigkeit;
             Schwierigkeiten_Button_On_Off(event, "Normal", "Leicht");
         }
 
@@ -113,7 +113,6 @@ $(function () { //Document Ready in Kurz
         $("#Zeiten").empty();
         Trys = 0;
     }
-
 
     //Schwierigkeitsbuttons Mit der Funkton Belegen
     $("#Leicht").on("click", { schwierigkeit: "Leicht" }, Spielfeld_Erstellen);
