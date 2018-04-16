@@ -4,16 +4,16 @@ $(function () { //Document Ready in Kurz
     var Kreis;
 
     var Trys = 0;
-    
+
     $("#Leicht").prop("disabled", true);
-    
+
     function ReaktionMessen() {
-        if(schwierigkeit == 1) {
+        if (schwierigkeit == 1) {
             Kreis = "#ReaktionsKreis0";
         }
- 
-        if(schwierigkeit == 2) {
-        var randomKreis = Math.floor((Math.random() * 4) +1);
+
+        if (schwierigkeit == 2) {
+            var randomKreis = Math.floor((Math.random() * 4) + 1);
             Kreis = "#ReaktionsKreis" + randomKreis;
         }
         //Start Button & Neuer Versuch Button disabln bis man in den Kreis geklickt hat.
@@ -66,46 +66,62 @@ $(function () { //Document Ready in Kurz
             $("#NeuerVersuch").prop("disabled", false);
         });
     }
-    
 
-    
-$('#Normal').click(function() {
-    schwierigkeit = 2;
-    var KreiseNormal = '<div class="ReaktionsKreis float-left" id="ReaktionsKreis1"></div> <div class="ReaktionsKreis float-left" id="ReaktionsKreis2"></div><div class="ReaktionsKreis float-left" id="ReaktionsKreis3"></div> <div class="ReaktionsKreis float-left" id="ReaktionsKreis4"></div>';     
-    $("#ReaktionsKreis0").remove();
-    $("#Spielfeld").append(KreiseNormal);
+    $('#Normal').click(function () {
+        schwierigkeit = 2;
+
+        //erstellt 4 neue Kreise mit IDs und fügt diese dem Spielfeld an
+        var KreiseNormal = '<div class="row"><div class="ReaktionsKreis2" id="ReaktionsKreis1"></div> <div class="ReaktionsKreis2" id="ReaktionsKreis2"></div></div>	<div class="row" style="margin: 0 auto;"><div class="ReaktionsKreis2" id="ReaktionsKreis3"></div> <div class="ReaktionsKreis2" id="ReaktionsKreis4"></div></div>';
+        $("#ReaktionsKreis0").remove();
+        $("#Spielfeld").append(KreiseNormal);
 
 
-$(this).prop("disabled", true);
-$("#Leicht").prop("disabled", false);
-$("#Schwer").prop("disabled", false);
-$("#Zeiten").empty();
-Trys = 0;
-});
+        //blockt aktuellen Knopf und entsperrt andere Schwierigkeiten
+        $(this).prop("disabled", true);
+        $("#Leicht").prop("disabled", false);
+        $("#Schwer").prop("disabled", false);
+        $("#StartButton").prop("disabled", false);
+        //leert Zeiten und setzt Versuche zurück 
+        $("#Zeiten").empty();
+        Trys = 0;
+    });
 
-$('#Leicht').click(function() {
-    schwierigkeit = 1;
-$("#ReaktionsKreis1").remove();
-$("#ReaktionsKreis2").remove();
-$("#ReaktionsKreis3").remove();
-$("#ReaktionsKreis4").remove();
-var ReaktionsKreis0 = '<div style="top:50px;" class="ReaktionsKreis mx-auto" id="ReaktionsKreis0"></div>';
-$("#Spielfeld").append(ReaktionsKreis0);
-$(this).prop("disabled", true);
-$("#Normal").prop("disabled", false);
-$("#Schwer").prop("disabled", false);
-$("#Zeiten").empty();
-Trys = 0;
-});
+    $('#Leicht').click(function () {
+        schwierigkeit = 1;
 
-$('#Schwer').click(function() {
-    schwierigkeit = 3;
-$(this).prop("disabled", true);
-$("#Normal").prop("disabled", false);
-$("#Leicht").prop("disabled", false);
-$("#Zeiten").empty();
-Trys = 0;
-});
+        //entfernt alle Kreise von Normal
+        $("#ReaktionsKreis1").remove();
+        $("#ReaktionsKreis2").remove();
+        $("#ReaktionsKreis3").remove();
+        $("#ReaktionsKreis4").remove();
+        //erstellt neuen Kreis für Einfach
+        var ReaktionsKreis0 = '<div style="top:50px;" class="ReaktionsKreis mx-auto" id="ReaktionsKreis0"></div>';
+        $("#Spielfeld").append(ReaktionsKreis0);
+
+        //blockt aktuellen Knopf und entsperrt andere Schwierigkeiten
+        $(this).prop("disabled", true);
+        $("#Normal").prop("disabled", false);
+        $("#Schwer").prop("disabled", false);
+        $("#StartButton").prop("disabled", false);
+
+        //leert Zeiten und setzt Versuche zurück 
+        $("#Zeiten").empty();
+        Trys = 0;
+    });
+
+    $('#Schwer').click(function () {
+        schwierigkeit = 3;
+
+        //blockt aktuellen Knopf und entsperrt andere Schwierigkeiten
+        $(this).prop("disabled", true);
+        $("#Normal").prop("disabled", false);
+        $("#Leicht").prop("disabled", false);
+        $("#StartButton").prop("disabled", false);
+
+        //leert Zeiten und setzt Versuche zurück
+        $("#Zeiten").empty();
+        Trys = 0;
+    });
 
 
     $("#StartButton").click(ReaktionMessen);

@@ -6,7 +6,15 @@
     height: 250px;
     text-align: center;
     border-radius: 125px;
+	
 }
 
-
+.ReaktionsKreis2 {
+	background-color: #555;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    border-radius: 125px;
+}
 
