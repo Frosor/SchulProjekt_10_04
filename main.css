@@ -1,27 +1,12 @@
-/*  //Wird nicht mehr gebraucht, wollte es nur nicht löschen weil es deins ist 
-body, html {
-    height: 100%;
-}
-.hide {
-    background-color: lightgrey;
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    top: 100px;
-    left: 250px;
-    border: 1px solid black;
-    text-align: center;
-    border-radius: 100px;
-}
-*/
 
-#ReaktionsKreis {
+.ReaktionsKreis {
     background-color: #555;
     position: relative;
-    top: 50px;
     width: 250px;
     height: 250px;
     text-align: center;
     border-radius: 125px;
 }
+
+
 
