@@ -19,9 +19,26 @@
     float: left;
     top: 50px;
 }
-#wrapper
-{
+
+.ReaktionsKreis3 {
+	background-color: #555;
+    position: relative;
+    width: 133px;
+    height: 133px;
+    text-align: center;
+    border-radius: 69px;
+    float: left;
+    top: 50px;
+}
+
+.wrapper{
    margin: auto;
    width: 302pt;
+}
+
+#toptime{
+    position: absolute;
+    bottom: 0;
+    left: 15px;
 }
 
