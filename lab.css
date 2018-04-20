@@ -27,8 +27,9 @@
     width: 50px;
 }
 #buttonleiste{
-
+    position: relative;
     width: 559px;
+    top: 5px;
     
 }
 #Start{
