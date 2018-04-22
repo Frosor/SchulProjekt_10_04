@@ -6,6 +6,7 @@ $(function () { //Document Ready in Kurz
     var spam = true;
     var toptime = 0;
     $("#NeuerVersuch").prop("disabled", true);
+    $("#StartButton").prop("disabled", true);
     var spielfeld_leicht = '<div style="top:50px;" class="ReaktionsKreis mx-auto Kreis" id="ReaktionsKreis0"></div>';
     var spielfeld_normal = '<div class="wrapper"><div class="ReaktionsKreis2 Kreis" id="ReaktionsKreis1"></div> <div class="ReaktionsKreis2 Kreis" id="ReaktionsKreis2"></div>	<div class="ReaktionsKreis2 Kreis" id="ReaktionsKreis3"></div> <div class="ReaktionsKreis2 Kreis" id="ReaktionsKreis4"></div></div>';
     var spielfeld_schwer = '<div class="wrapper"><div class="ReaktionsKreis3 Kreis" id="ReaktionsKreis5"></div> <div class="ReaktionsKreis3 Kreis" id="ReaktionsKreis6"></div>	<div class="ReaktionsKreis3 Kreis" id="ReaktionsKreis7"></div> <div class="ReaktionsKreis3 Kreis" id="ReaktionsKreis8"></div><div class="ReaktionsKreis3 Kreis" id="ReaktionsKreis9"></div> <div class="ReaktionsKreis3 Kreis" id="ReaktionsKreis10"></div>	<div class="ReaktionsKreis3 Kreis" id="ReaktionsKreis11"></div> <div class="ReaktionsKreis3 Kreis" id="ReaktionsKreis12"></div><div class="ReaktionsKreis3 Kreis" id="ReaktionsKreis13"></div></div>';
@@ -44,6 +45,7 @@ $(function () { //Document Ready in Kurz
 
         //Start Button & Neuer Versuch Button disabln bis man in den Kreis geklickt hat.
         $(this).off();
+        $(this).prop("disabled", true);
         $("#NeuerVersuch").prop("disabled", true);
 
         //Random Start Zeit nach Drücken des Start Buttons zwischen 1-4 Sekunden
@@ -60,30 +62,30 @@ $(function () { //Document Ready in Kurz
         Trys++;
 
         $(".Kreis").one("click", function () {
-            
+
             //Aktuelle Farbe des Kreises am Moment des Klicks in eine Varibale speichern
             var color = $(this).css('background-color');
             //Mehrfach klicken auch auf andere Kreise verhindern (Normal, Schwer)
             $(".Kreis").off();
             if (color == "rgb(255, 255, 0)") {
-                
+
                 //Zeit des aktuellen Versuches und ID zur akutellen Zeit
                 var id = "zeit_div_" + Trys;
                 // Standard Abweichung (25), durch div. Aufrufe 
                 var time = new Date().getTime() - ms - 25;
-                
-               //berechnet Best-Zeit, wenn nicht vorhanden wird Best-Zeit als aktuelle zeit gesetzt 
-               if(toptime > time || toptime == 0) {
+
+                //berechnet Best-Zeit, wenn nicht vorhanden wird Best-Zeit als aktuelle zeit gesetzt 
+                if (toptime > time || toptime == 0) {
                     toptime = time;
                     $("#tt").empty();
-                    $("#bottom").prepend("<div id='tt'>" + toptime + " ms.</div>"); 
-                    
+                    $("#bottom").prepend("<div id='tt'>" + toptime + " ms.</div>");
+
                 }
                 //Zeit in MS in die Zeiten Box; jewaliges div mit einer ID versehen damit man ein einzeln löschen kann wenn es zu viele werden
                 $("#Zeiten").prepend("<div id=" + id + "> " + Trys + ". " + time + " ms. </div>");
                 //Best-Zeit header in die Zeiten Box, Best-Zeit in MS in inhalt box
                 $("#Zeiten").prepend("<h5 id='toptime'> Best-Zeit: </h5>");
-                
+
             }
             if (color != "rgb(255, 255, 0)") {
                 var id = "zeit_div_" + Trys;
@@ -141,6 +143,7 @@ $(function () { //Document Ready in Kurz
         $("#Zeiten").empty();
         $("#tt").empty();
         $("#NeuerVersuch").prop("disabled", true);
+        $("#StartButton").prop("disabled", false);
         toptime = 0;
         Trys = 0;
     }
@@ -155,13 +158,15 @@ $(function () { //Document Ready in Kurz
 
     //Start Button wieder Aktivierern + Farbe des Kreises wieder auf ursprung
     $("#NeuerVersuch").click(function () {
-        if(spam == true) {
-        $("#StartButton").on("click", ReaktionMessen);
-        $(Kreis).css("background-color", "rgb(85, 85, 85)");
-        spam = false;
+        $(this).prop("disabled", true);
+        $("#StartButton").prop("disabled", false);
+        if (spam == true) {
+            $("#StartButton").on("click", ReaktionMessen);
+            $(Kreis).css("background-color", "rgb(85, 85, 85)");
+            spam = false;
         }
     });
-    
+
     //$("#StartButton").click, ReaktionMessen);
 
     //Seite Neu Laden

@@ -10,16 +10,20 @@ $(function () {
     var playerX = 0;
     var playerY = 0;
     var playerPOS;
-    var nextRound = false;
-    var timeout;
+    var hindernisse = 40;
+    var randomB;
+    var ziel;
+    var zielFarbe;
+    var Spielfeld;
+    var ZielID;
+    var Zeit = 10000;;
+    $("#10_Sekunde").prop("disabled", true);
+    $("#gewonnen").hide();
+    $("#verloren").hide();
 
     //erstellt leeres Spielfeld mit Spieler wenn Seite geladen wird
-    $("#newtry").hide();
-    var BlockID;
-    var Spielfeld;
     $(function erstellSpielfeld() {
-        var player = '<div id="player"></div>';
-        $("#spielfeld").prepend(player);
+        $("#spielfeld").prepend('<div id="player"></div>');
 
         for (var i = 0; i < 100; i++) {
             BlockID = "block" + i;
@@ -31,6 +35,24 @@ $(function () {
         $("#spielfeld").prepend(Spielfeld);
     });
 
+    $("#3_Sekunde").click(function () {
+        Zeit = 3000;
+        $(this).prop("disabled", true);
+        $("#10_Sekunde").prop("disabled", false);
+        $("#5_Sekunde").prop("disabled", false);
+    });
+    $("#5_Sekunde").click(function () {
+        Zeit = 5000;
+        $(this).prop("disabled", true);
+        $("#10_Sekunde").prop("disabled", false);
+        $("#3_Sekunde").prop("disabled", false);
+    });
+    $("#10_Sekunde").click(function () {
+        Zeit = 10000;
+        $(this).prop("disabled", true);
+        $("#3_Sekunde").prop("disabled", false);
+        $("#5_Sekunde").prop("disabled", false);
+    });
 
 
 
@@ -42,41 +64,149 @@ $(function () {
         //erstellt zufällig generiertes Labyrinth nachdem auf Bereit gedrückt wird
 
         $(function randomLabyrinth() {
-            for (var j = 0; j < 20; j++) {
-                var randomB = Math.floor((Math.random() * 99) + 1);
-                var Block = "#block" + randomB;
+            for (var j = 0; j < hindernisse; j++) {
+                randomB = Math.floor((Math.random() * 99) + 1);
+                Block = "#block" + randomB;
                 $(Block).css("background-color", "rgb(255, 255, 0)");
             }
             do {
-                var ziel = "#block" + Math.floor((Math.random() * 99) + 1);
-                var zielFarbe = $(ziel).css('background-color');
-            } while (zielFarbe == "rgb(255,255,0)")
+                ZielID = Math.floor(Math.random() * (99 - 40 + 1) + 40);
+                ziel = "#block" + ZielID;
+                zielFarbe = $(ziel).css('background-color');
+            } while (zielFarbe == "rgb(255,255,0)");
 
             $(ziel).css("background-color", "rgb(0, 255, 0)");
 
-            var colorBlock1 = $('#block1').css('background-color');
-            var colorBlock10 = $('#block10').css('background-color');
-            if (colorBlock1 == colorBlock10) {
-                if (Math.floor((Math.random() * 2) + 1) % 2 == 0) {
-                    $('#block1').css("background-color", "grey");
-                } else
-                    $('#block10').css("background-color", "grey");
+            //verhindert dass Spieler eingesperrt wird
+
+        });
+
+        $(function betterLab() {
+            for (var k = 1; k < 40; k++) {
+                var zahl = k + 9;
+                var zahl1 = k + (9 * k);
+                var zahl2 = k + 10;
+                var zahl3 = k + 19;
+                var farbe1 = $("#block" + k).css('background-color');
+                var farbe2 = $("#block" + zahl).css('background-color');
+                var farbe3 = $("#block" + zahl1).css('background-color');
+                var farbe4 = $("#block" + zahl2).css('background-color');
+                var farbe5 = $("#block" + zahl3).css('background-color');
+                if (farbe1 == farbe4 && farbe4 == farbe5 && farbe5 == farbe3) {
+                    var r = Math.floor((Math.random() * 4) + 1);
+                    switch (r) {
+                        case 1:
+                            $("#block" + k).css("background-color", "grey");
+                            break;
+                        case 2:
+                            $("#block" + zahl2).css("background-color", "grey");
+                            break;
+                        case 3:
+                            $("#block" + zahl1).css("background-color", "grey");
+                            break;
+                        case 4:
+                            $("#block" + zahl3).css("background-color", "grey");
+                            break;
+                    }
+
+                }
+                if (farbe1 == farbe2 && farbe2 == farbe3) {
+                    var r = Math.floor((Math.random() * 3) + 1);
+                    switch (r) {
+                        case 1:
+                            $("#block" + k).css("background-color", "grey");
+                            break;
+                        case 2:
+                            $("#block" + zahl).css("background-color", "grey");
+                            break;
+                        case 3:
+                            $("#block" + zahl1).css("background-color", "grey");
+                            break;
+                    }
+
+                }
+                if (farbe1 == farbe2) {
+                    var r = Math.floor((Math.random() * 2) + 1);
+                    switch (r) {
+                        case 1:
+                            $("#block" + k).css("background-color", "grey");
+                            break;
+                        case 2:
+                            $("#block" + zahl).css("background-color", "grey");
+                            break;
+                    }
+                }
+            }
+
+            var zielFarbe0 = ZielID - 10;
+            var zielFarbe1 = ZielID + 10;
+            var zielFarbe2 = ZielID + 1;
+            var zielFarbe3 = ZielID - 1;
+
+            var zielFarbeB0 = "#block" + zielFarbe0;
+            var zielFarbeB1 = "#block" + zielFarbe1;
+            var zielFarbeB2 = "#block" + zielFarbe2;
+            var zielFarbeB3 = "#block" + zielFarbe3;
+
+            zielFarbe0 = $("#block" + zielFarbe0).css('background-color');
+            zielFarbe1 = $("#block" + zielFarbe1).css('background-color');
+            zielFarbe2 = $("#block" + zielFarbe2).css('background-color');
+            zielFarbe3 = $("#block" + zielFarbe3).css('background-color');
+            if (zielFarbe0 == zielFarbe3 || zielFarbe0 == zielFarbe2 || zielFarbe1 == zielFarbe3 || zielFarbe1 == zielFarbe2) {
+                var r1 = Math.floor((Math.random() * 2) + 1);
+                switch (r1) {
+                    case 1:
+                        $(zielFarbeB0).css("background-color", "grey");
+                        break;
+                    case 2:
+                        $(zielFarbeB1).css("background-color", "grey");
+                        break;
+                }
+            }
+            if (zielFarbe0 == zielFarbe1 && zielFarbe1 == zielFarbe2) {
+                var r1 = Math.floor((Math.random() * 3) + 1);
+                switch (r1) {
+                    case 1:
+                        $(zielFarbeB0).css("background-color", "grey");
+                        break;
+                    case 2:
+                        $(zielFarbeB1).css("background-color", "grey");
+                        break;
+                    case 3:
+                        $(zielFarbeB2).css("background-color", "grey");
+                        break;
+                }
+
+            }
+            if (zielFarbe0 == zielFarbe1 && zielFarbe1 == zielFarbe2 && zielFarbe2 == zielFarbe3) {
+                var r1 = Math.floor((Math.random() * 4) + 1);
+                switch (r1) {
+                    case 1:
+                        $(zielFarbeB0).css("background-color", "grey");
+                        break;
+                    case 2:
+                        $(zielFarbeB1).css("background-color", "grey");
+                        break;
+                    case 3:
+                        $(zielFarbeB2).css("background-color", "grey");
+                        break;
+                    case 4:
+                        $(zielFarbeB3).css("background-color", "grey");
+                        break;
+                }
+
             }
 
         });
 
-
-
-
-
         //Bewegungs und Animier Muster, wird erst nach 10 sek. freigegeben
 
-        timeout = setTimeout(function warteSpieler() {
+        setTimeout(function warteSpieler() {
 
             setInterval(function checkKey(e) {
                 document.onkeydown = checkKey;
 
-                if (gewonnen == false && verloren == false && checkKey) {
+                if (gewonnen == false && verloren == false) {
                     if (e.keyCode == '38' && playerX > 0) {
                         // up arrow
                         $("#player").animate({ top: '-=51px' }, 0);
@@ -128,33 +258,19 @@ $(function () {
                             playerPOS = playerY;
                         if (playerPOS == Enemys[j] && verloren == false) {
                             verloren = true;
-                            alert("verloren");
                         }
                         if (playerPOS == win && gewonnen == false) {
                             gewonnen = true;
-                            alert("gewonnen");
                         }
                     }
                 }
 
                 //Wenn Spieler gewonnen oder verloren hat, wird Start wieder freigegeben und Spielfeld zurückgesetzt
-                if (verloren == true || gewonnen == true) {
-                    clearTimeout(timeout);
-                    $("#Start").html('Neuer Versuch');
-                    $("#Start").prop("disabled", false);
-                    gewonnen = false;
-                    verloren = false;
-                    playerX = 0;
-                    playerY = 0;
-                    playerPOS = 0;
-                    for (var j in Enemys) {
-                        var Grey = "#block" + Enemys[j];
-                        $(Grey).css("background-color", "grey");
-                    }
-                    $("#block" + win).css("background-color", "grey");
 
-                    Enemys = [];
-                    $("#player").css({ top: 1, left: 0, position: 'relative' });
+                if (gewonnen == true) {
+                    $("#gewonnen").show();
+                } if (verloren == true) {
+                    $("#verloren").show();
                 }
                 console.clear();
             }, 100);
@@ -165,8 +281,9 @@ $(function () {
                     $(BlockID).css("background-color", "grey");
                 }
             }, 100);
-        }, 10000);
+        }, Zeit);
 
     });
-
+    $("#gewonnenButton").click(function () { location.reload(); });
+    $("#verlorenButton").click(function () { location.reload(); });
 });

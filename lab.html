@@ -4,28 +4,93 @@
 <head>
     <meta charset="utf-8">
 
-    <link rel="shortcut icon" href="" />
+    <link rel="shortcut icon" href="favicon.ico" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="lab.css">
     <script src="jQuary3.3.1.js"></script>
     <script src="lab.js"></script>
 
-    <title>Lab TEST</title>
+    <title>Labyrinth</title>
 </head>
 
 <body>
+
     <div class="jumbotron text-center">
-        <h1>Kurzzeit Gedächtnis Test</h1>
+        <h1>Gedächtnistest</h1>
         <p>Testen Sie ihr Gedächtnis! </p>
     </div>
-    <div id="spielfeld" class="grid-container">
 
 
+
+    <!-- Zeile Zwei || "Anleitung, StartButton, Ihre Zeit"-->
+    <div class=" row " style="height:50px; ">
+        <div class="col-2 bg-dark text-light pt-2 ">
+            <h4>Anleitung:</h4>
+        </div>
+        <div class=" col-8 bg-light ">
+            <button type="button " id="Start" class="btn col-12 btn-dark ">
+                <h5> Start </h5>
+            </button>
+        </div>
+        <div class="col-2 bg-info text-dark pt-2 ">
+            <h4> Zeit ändern </h4>
+        </div>
     </div>
-    <div id="buttonleiste">
-        <button type="button " id="Start" class="btn col-3 btn-dark float-right mr-5">Bereit!</button>
-        <button type="button " id="newtry" class="btn col-3 btn-dark float-right mr-5">Neuer Versuch!</button>
+
+    <!-- Content Zeile-->
+    <div class="row " style="height:500px; ">
+        <div class="col-2 bg-dark text-light ">
+            <br> Es wird ein Spielfeld erstellt mit Hindernissen (Gelb),
+            <br> einem Ziel (Grün) und einem Spieler (Rot).
+            <br> Bewegen Sie den Spieler mit den Pfeiltasten durch das Spielfeld.
+            <br> 10 Sekunden nachdem der Start Knopf gedrückt wurde,
+            <br> verschwinden die Hindernisse sowie das Ziel.
+            <br>
+            <br> Steuern Sie nun den Spieler zum Ziel, um das Spiel
+            <br> zu gewinnen, treffen Sie jedoch auf ein Hindernis,
+            <br> so verlieren Sie.
+            <br>
+            <br> Viel Erfolg!
+
+        </div>
+
+        <div class="col-8 bg-light " id="Spielfeld">
+            <div class="alert alert-success alert-dismissible" id="gewonnen">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" id="gewonnenButton">&times;</a>
+                <strong>Gewonnen!</strong>
+            </div>
+            <div class="alert alert-warning alert-dismissible" id="verloren">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" id="verlorenButton">&times;</a>
+                <strong>Verloren!</strong>
+            </div>
+            <div id="spielfeld" class="grid-container mx-auto"></div>
+        </div>
+        <div class="col-2 bg-info " id="Zeiten">
+            <h4 class="mt-5">
+                <button class="btn btn-outline-dark btn-block " id="3_Sekunde"> 3 Sekunden </button>
+                <button class="btn btn-outline-dark btn-block " id="5_Sekunde"> 5 Sekunden </button>
+                <button class="btn btn-outline-dark btn-block " id="10_Sekunde"> 10 Sekunden </button>
+            </h4>
+        </div>
     </div>
+
+    <!-- Untere Zeile-->
+    <div class="row " style="height:50px; ">
+
+        <div class="col-2 bg-dark "></div>
+        <div class="col-2 bg-info pt-2" style="left: 66.66%" id="bottom">
+        </div>
+    </div>
+    <div class="row" style="height:50px;">
+        <a href="main.html" id="Reaktion_link" class="btn btn-block mt-2 btn-outline-dark">
+            <h5> Reaktionstest </h5>
+        </a>
+        <a href="nicht_memory.html" id="Reaktion_link" class="btn btn-block mt-2 btn-outline-dark">
+            <h5> Zahlen merken </h5>
+        </a>
+    </div>
+
 </body>
+
 
 </html>

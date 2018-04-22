@@ -6,7 +6,8 @@
     width: 50px;
 }
 #spielfeld {
-
+    position: relative;
+    top: 33px;
     background: black;
     height: 510px;
     width: 510px;
@@ -26,13 +27,13 @@
     height: 50px;
     width: 50px;
 }
-#buttonleiste{
-    position: relative;
-    width: 559px;
-    top: 5px;
-    
+#gewonnen{
+    position: fixed;
+top: auto;
+left: auto;
 }
-#Start{
-    width:100%;
-    height:100%;
+#verloren{
+    position: fixed;
+    top: auto;
+    left: auto;
 }
