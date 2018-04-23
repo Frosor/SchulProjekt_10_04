@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
@@ -23,6 +23,7 @@
 
 
     <!-- Zeile Zwei || "Anleitung, StartButton, Ihre Zeit"-->
+    <div class="container">
     <div class=" row " style="height:50px; ">
         <div class="col-2 bg-dark text-light pt-2 ">
             <h4>Anleitung:</h4>
@@ -36,6 +37,7 @@
             <h4> Zeit ändern </h4>
         </div>
     </div>
+    
 
     <!-- Content Zeile-->
     <div class="row " style="height:500px; ">
@@ -44,26 +46,26 @@
             <br> einem Ziel (Grün) und einem Spieler (Rot).
             <br> Bewegen Sie den Spieler mit den Pfeiltasten durch das Spielfeld.
             <br> 10 Sekunden nachdem der Start Knopf gedrückt wurde,
-            <br> verschwinden die Hindernisse sowie das Ziel.
-            <br>
-            <br> Steuern Sie nun den Spieler zum Ziel, um das Spiel
-            <br> zu gewinnen, treffen Sie jedoch auf ein Hindernis,
-            <br> so verlieren Sie.
-            <br>
-            <br> Viel Erfolg!
+            <br> verschwinden die Hindernisse sowie das Ziel. Steuern Sie nun den 
+             Spieler zum Ziel, um das Spiel
+            <br> zu gewinnen.
+
+            
 
         </div>
 
-        <div class="col-8 bg-light " id="Spielfeld">
-            <div class="alert alert-success alert-dismissible" id="gewonnen">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close" id="gewonnenButton">&times;</a>
-                <strong>Gewonnen!</strong>
-            </div>
-            <div class="alert alert-warning alert-dismissible" id="verloren">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close" id="verlorenButton">&times;</a>
-                <strong>Verloren!</strong>
-            </div>
+        <div class="col-8 bg-light" style = "z-index:-10;">
+
+
             <div id="spielfeld" class="grid-container mx-auto"></div>
+        </div>
+        <div class="alert alert-success alert-dismissible" id="gewonnen">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close" id="gewonnenButton">&times;</a>
+            <strong>Gewonnen!</strong>
+        </div>
+        <div class="alert alert-warning alert-dismissible" id="verloren">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close" id="verlorenButton">&times;</a>
+            <strong>Verloren!</strong>
         </div>
         <div class="col-2 bg-info " id="Zeiten">
             <h4 class="mt-5">
@@ -88,6 +90,10 @@
         <a href="nicht_memory.html" id="Reaktion_link" class="btn btn-block mt-2 btn-outline-dark">
             <h5> Zahlen merken </h5>
         </a>
+		<a href="tictactoe.html" id="Reaktion_link" class="btn btn-block mt-2 btn-outline-dark">
+               <h5> Tic-Tac-Toe </h5>
+         </a>
+    </div>
     </div>
 
 </body>

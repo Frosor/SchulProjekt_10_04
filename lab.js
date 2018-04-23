@@ -18,8 +18,11 @@ $(function () {
     var ZielID;
     var Zeit = 10000;;
     $("#10_Sekunde").prop("disabled", true);
+    $("#10_Sekunde").css("background-color","black");
+    $("#10_Sekunde").css("color","white");
     $("#gewonnen").hide();
     $("#verloren").hide();
+
 
     //erstellt leeres Spielfeld mit Spieler wenn Seite geladen wird
     $(function erstellSpielfeld() {
@@ -40,18 +43,36 @@ $(function () {
         $(this).prop("disabled", true);
         $("#10_Sekunde").prop("disabled", false);
         $("#5_Sekunde").prop("disabled", false);
+        $(this).css("background-color","black");
+        $(this).css("color","white");
+        $("#10_Sekunde").css("background-color","transparent");
+        $("#5_Sekunde").css("background-color","transparent");
+        $("#10_Sekunde").css("color","black");
+        $("#5_Sekunde").css("color","black");
     });
     $("#5_Sekunde").click(function () {
         Zeit = 5000;
         $(this).prop("disabled", true);
         $("#10_Sekunde").prop("disabled", false);
         $("#3_Sekunde").prop("disabled", false);
+        $(this).css("background-color","black");
+        $(this).css("color","white");
+        $("#10_Sekunde").css("background-color","transparent");
+        $("#3_Sekunde").css("background-color","transparent");
+        $("#10_Sekunde").css("color","black");
+        $("#3_Sekunde").css("color","black");
     });
     $("#10_Sekunde").click(function () {
         Zeit = 10000;
         $(this).prop("disabled", true);
         $("#3_Sekunde").prop("disabled", false);
         $("#5_Sekunde").prop("disabled", false);
+        $(this).css("background-color","black");
+        $(this).css("color","white");
+        $("#3_Sekunde").css("background-color","transparent");
+        $("#5_Sekunde").css("background-color","transparent");
+        $("#3_Sekunde").css("color","black");
+        $("#5_Sekunde").css("color","black");
     });
 
 
@@ -59,7 +80,10 @@ $(function () {
 
     $("#Start").click(function () {
 
-        $(this).prop("disabled", true);
+        $(this).prop("disabled", true);       
+        $("#3_Sekunde").prop("disabled", true);
+        $("#5_Sekunde").prop("disabled", true);
+        $("#10_Sekunde").prop("disabled", true);
 
         //erstellt zufällig generiertes Labyrinth nachdem auf Bereit gedrückt wird
 
@@ -77,21 +101,24 @@ $(function () {
 
             $(ziel).css("background-color", "rgb(0, 255, 0)");
 
-            //verhindert dass Spieler eingesperrt wird
+            //verhindert dass Spieler unmittelbar eingesperrt wird
 
         });
 
         $(function betterLab() {
             for (var k = 1; k < 40; k++) {
+
                 var zahl = k + 9;
                 var zahl1 = k + (9 * k);
                 var zahl2 = k + 10;
                 var zahl3 = k + 19;
+
                 var farbe1 = $("#block" + k).css('background-color');
                 var farbe2 = $("#block" + zahl).css('background-color');
                 var farbe3 = $("#block" + zahl1).css('background-color');
                 var farbe4 = $("#block" + zahl2).css('background-color');
                 var farbe5 = $("#block" + zahl3).css('background-color');
+
                 if (farbe1 == farbe4 && farbe4 == farbe5 && farbe5 == farbe3) {
                     var r = Math.floor((Math.random() * 4) + 1);
                     switch (r) {
@@ -138,6 +165,8 @@ $(function () {
                 }
             }
 
+            //verhindert dass Ziel unmittelbar eingesperrt wird
+
             var zielFarbe0 = ZielID - 10;
             var zielFarbe1 = ZielID + 10;
             var zielFarbe2 = ZielID + 1;
@@ -152,14 +181,20 @@ $(function () {
             zielFarbe1 = $("#block" + zielFarbe1).css('background-color');
             zielFarbe2 = $("#block" + zielFarbe2).css('background-color');
             zielFarbe3 = $("#block" + zielFarbe3).css('background-color');
-            if (zielFarbe0 == zielFarbe3 || zielFarbe0 == zielFarbe2 || zielFarbe1 == zielFarbe3 || zielFarbe1 == zielFarbe2) {
-                var r1 = Math.floor((Math.random() * 2) + 1);
+            if (zielFarbe0 == zielFarbe3 || zielFarbe0 == zielFarbe2 || zielFarbe1 == zielFarbe3 || zielFarbe1 == zielFarbe2 || zielFarbe2 == zielFarbe3) {
+                var r1 = Math.floor((Math.random() * 4) + 1);
                 switch (r1) {
                     case 1:
                         $(zielFarbeB0).css("background-color", "grey");
                         break;
                     case 2:
                         $(zielFarbeB1).css("background-color", "grey");
+                        break;
+                    case 3:
+                        $(zielFarbeB2).css("background-color", "grey");
+                        break;
+                    case 4:
+                        $(zielFarbeB3).css("background-color", "grey");
                         break;
                 }
             }
@@ -204,53 +239,55 @@ $(function () {
         setTimeout(function warteSpieler() {
 
             setInterval(function checkKey(e) {
+
                 document.onkeydown = checkKey;
 
                 if (gewonnen == false && verloren == false) {
                     if (e.keyCode == '38' && playerX > 0) {
-                        // up arrow
+                        // hoch Pfeil
                         $("#player").animate({ top: '-=51px' }, 0);
                         playerX--;
                     }
                     else if (e.keyCode == '40' && playerX < 9) {
-                        // down arrow
+                        // runter Pfeil
                         $("#player").animate({ top: '+=51px' }, 0);
                         playerX++;
 
                     }
                     else if (e.keyCode == '37' && playerY > 0) {
-                        // left arrow
+                        // links Pfeil
                         $("#player").animate({ left: '-=51px' }, 0);
                         playerY--;
 
                     }
                     else if (e.keyCode == '39' && playerY < 9) {
-                        // right arrow
+                        // rechts Pfeil
                         $("#player").animate({ left: '+=51px' }, 0);
                         playerY++;
                     }
                 }
-
-
-
+            
             }, 10);
+
+
+
+            $(function getHindernisse() {
+            for (var i = 0; i < 100; i++) {
+                BlockID = "#block" + i;
+                tot = $(BlockID).css('background-color');
+                if (tot == "rgb(255, 255, 0)") {
+                    Enemys.push(i);
+                }
+                if (tot == "rgb(0, 255, 0)") {
+                    win = i;
+                }
+            }
+        });
 
             //kontrolliert ob Spieler gewonnen oder verloren hat
 
             setInterval(function checkwin() {
                 if (verloren == false || gewonnen == false) {
-
-
-                    for (var i = 0; i < 100; i++) {
-                        BlockID = "#block" + i;
-                        tot = $(BlockID).css('background-color');
-                        if (tot == "rgb(255, 255, 0)") {
-                            Enemys.push(i);
-                        }
-                        if (tot == "rgb(0, 255, 0)") {
-                            win = i;
-                        }
-                    }
                     for (var j in Enemys) {
                         if (playerX != 0) {
                             playerPOS = "" + playerX + playerY;
@@ -264,15 +301,13 @@ $(function () {
                         }
                     }
                 }
-
-                //Wenn Spieler gewonnen oder verloren hat, wird Start wieder freigegeben und Spielfeld zurückgesetzt
-
                 if (gewonnen == true) {
                     $("#gewonnen").show();
                 } if (verloren == true) {
                     $("#verloren").show();
                 }
                 console.clear();
+                //Wenn Spieler gewonnen oder verloren hat, wird Start wieder freigegeben und Spielfeld zurückgesetzt
             }, 100);
 
             setTimeout(function clearGame() {
@@ -284,6 +319,15 @@ $(function () {
         }, Zeit);
 
     });
+
+    //lädt Seite neu wenn alert geschlossen wird
+ 
+
+
+
     $("#gewonnenButton").click(function () { location.reload(); });
     $("#verlorenButton").click(function () { location.reload(); });
+
+
+
 });

@@ -6,6 +6,7 @@
     width: 50px;
 }
 #spielfeld {
+    z-index:-10;
     position: relative;
     top: 33px;
     background: black;
@@ -29,11 +30,13 @@
 }
 #gewonnen{
     position: fixed;
-top: auto;
-left: auto;
+    top: 49.75%;
+    left: 44.75%;
+    width: 202px;
 }
 #verloren{
     position: fixed;
-    top: auto;
-    left: auto;
+    top: 49.75%;
+    left: 44.75%;
+    width: 202px;
 }
