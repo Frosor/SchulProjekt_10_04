@@ -1,0 +1,11 @@
+.feld{
+	background-color: grey;
+	width: 100px;
+	height: 100px;
+	
+}
+.tic-tac-toe{
+	position: relative;
+	left: 28%;
+	top: 18%;
+	}

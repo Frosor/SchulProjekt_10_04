@@ -1,0 +1,42 @@
+.ReaktionsKreis {
+    background-color: #555;
+    position: relative;
+    width: 250px;
+    height: 250px;
+    text-align: center;
+    border-radius: 125px;
+	
+}
+
+.ReaktionsKreis2 {
+	background-color: #555;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    border-radius: 100px;
+    float: left;
+    top: 50px;
+}
+
+.ReaktionsKreis3 {
+	background-color: #555;
+    position: relative;
+    width: 133px;
+    height: 133px;
+    text-align: center;
+    border-radius: 69px;
+    float: left;
+    top: 50px;
+}
+
+.wrapper{
+   margin: auto;
+   width: 302pt;
+}
+
+#toptime{
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+}
