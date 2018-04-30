@@ -1,0 +1,72 @@
+#spielfeld {
+    height: 50%;
+    width: 45%;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    background-color: black;
+}
+.grid-item {
+    position: relative;
+    float: left;
+    margin-top: 1%;
+    margin-left: 1%;
+    background-color: grey;
+    height: 8%;
+    width: 10%;
+}
+#player{
+    position:relative;
+    background-color: red;
+    top: 88.5%;
+    margin-top: 1%;
+    margin-left: 1%;
+    height: 8%;
+    width: 10%;
+}
+#g{
+    background-color: yellow;
+}
+#b{
+    background-color: blue; 
+}
+#p{
+    background-color: palevioletred;
+}
+#gr{
+    background-color: green; 
+}
+
+#scoreboard{
+    top: 425px;
+    height: 10%;
+    width: 100%;
+    position: relative;
+    background-color: lightgrey;
+}
+#highscores{
+    float:right;
+    right: 200px;
+    top: 75px;
+    height: 500px;
+    width: 200px;
+    position: relative;
+    background-color: lightgrey;
+}
+
+#color{
+    position: relative;
+    float: right;
+    right: 100px;
+    top: 100px;
+    height: 110px;
+    width: 110px;
+}
+
+.col{
+    float: left;
+    height: 50px;
+    width: 50px;
+    margin-left: 5px;
+    margin-top: 5px;
+}
