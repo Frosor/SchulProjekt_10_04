@@ -14,6 +14,10 @@ $(function () {
     var scores = [];
     var kleinesSpielfeld = [1, 9, 10, 18, 19, 27, 28, 36, 37, 45, 46, 54, 55, 63, 64, 72, 73, 81, 82, 90];
     var way;
+    var farbe;
+    var player;
+    var newpos, Spielfeld1;
+    var blockright, blockleft, farbeleft, farberight;
     var counter = 0;
     var ROB = false, stage2 = false, stage3 = false;
     $(".col").click(function () {
@@ -50,19 +54,29 @@ $(function () {
     });
 
     $("#startb").click(function () {
-        $("#spielfeld").append('<div id="player"></div>');
+        $("#block82").css("background-color", "rgb(255,0,0)");
         $(this).prop('disabled', true);
-        $("#color").hide();
+        $(".col").hide();
+        $("#hcol").hide();
         document.onkeydown = function checkKey(e) {
+            getPlayer();
+            blockright = player + 1;
+            farberight = $("#block" + blockright).css('background-color');
+            blockleft = player - 1;
+            farbeleft = $("#block" + blockleft).css('background-color');
             if (verloren == false) {
-                if (e.keyCode == '37' && playerPOS > linkerRand) {
+                if (e.keyCode == '37' && playerPOS > linkerRand && farbeleft != enemyColor) {
                     // links Pfeil
-                    $("#player").animate({ left: '-=11%' }, 0);
+                    $("#block" + player).css("background-color", "grey");
+                    newpos = --player;
+                    $("#block" + newpos).css("background-color", "rgb(255,0,0)");
                     playerPOS--;
                 }
-                else if (e.keyCode == '39' && playerPOS < rechterRand) {
+                else if (e.keyCode == '39' && playerPOS < rechterRand && farberight != enemyColor) {
                     // rechts Pfeil
-                    $("#player").animate({ left: '+=11%' }, 0);
+                    $("#block" + player).css("background-color", "grey");
+                    newpos = ++player;
+                    $("#block" + newpos).css("background-color", "rgb(255,0,0)");
                     playerPOS++;
                 }
             }
@@ -73,6 +87,13 @@ $(function () {
             for (var i = 1; i < 91; i++) {
                 block = $("#block" + i).css('background-color');
                 if (block == enemyColor) Enemys.push(i);
+            }
+        }
+
+        function getPlayer() {
+            for (var i = 82; i < 91; i++) {
+                farbe = $("#block" + i).css('background-color');
+                if (farbe == "rgb(255, 0, 0)") { player = i; }
             }
         }
 
@@ -105,12 +126,22 @@ $(function () {
         }, 30000);
 
         setInterval(function stageThree() {
-            for (var i = 0; i < kleinesSpielfeld.length; i++) {
-                $("#block" + kleinesSpielfeld[i]).css("background-color", "black");
-                stage3 = true;
-                linkerRand = 83;
-                rechterRand = 89;
+            getHindernisse();
+            for (var i = 0; i < kleinesSpielfeld.length; i++) $("#block" + kleinesSpielfeld[i]).css("background-color", "black");
+            stage3 = true;
+            linkerRand = 83;
+            rechterRand = 89;
+            if (playerPOS == 82) {
+                $("#block" + playerPOS).css("background-color", "black");
+                ++playerPOS;
+                $("#block" + playerPOS).css("background-color", "rgb(255,0,0)");
             }
+            if (playerPOS == 90) {
+                $("#block" + playerPOS).css("background-color", "black");
+                --playerPOS;
+                $("#block" + playerPOS).css("background-color", "rgb(255,0,0)");
+            }
+
         }, 50000);
 
         function spawnEvenBetterEnemy() {
@@ -158,7 +189,7 @@ $(function () {
                     else if (randy % 21 == 0 || randy % 20 == 0) spawnROB();
                     else spawnEnemy();
                     if (timeout >= 100) {
-                        timeout = timeout * .995;
+                        timeout = timeout * .999;
                     }
                     points += 10;
                     $("#scoreboard").html("<h3>Score: " + points + "<h3>");
@@ -167,16 +198,22 @@ $(function () {
                 if (stage2 == true && verloren == false) {
                     counter++;
                     if (counter % 5 == 0) spawnROB();
-                    if (counter % 51 == 0) stage2 = false;
+                    if (counter % 41 == 0) stage2 = false;
                 }
                 if (stage3 == true && verloren == false) {
                     counter++;
-                    if (counter % 41 == 0) stage3 = false;
+                    if (counter % 41 == 0) {
+                        stage3 = false;
+                        linkerRand = 82;
+                        rechterRand = 90;
+                        for (var t = 0; t < kleinesSpielfeld.length; t++) {
+                            $("#block" + kleinesSpielfeld[t]).css("background-color", "grey");
+                        }
+                    }
                 }
                 if (verloren == true) timeout = 500;
                 animateEnemy();
                 setTimeout(timer, timeout);
-                console.log(timeout);
             };
             timer();
         })();
