@@ -2,29 +2,25 @@ $(function () {
     var Spielfeld;
     var randEnemy, lastRand;
     var Enemys = [];
-    var block;
-    var timer;
-    var newi;
-    var rechterRand = 90, linkerRand = 82;
-    var playerPOS = 82;
-    var verloren = false;
+    var block, timer, newi;
+    var rechterRand = 90, linkerRand = 82, playerPOS = 86, points = 0;
+    //umstellen um spawn interval zu verändern
     var timeout = 500;
+    //umstellen um Standard Gegner farbe zu ändern
     var enemyColor = "rgb(0, 0, 255)";
-    var points = 0;
-    var scores = [];
     var kleinesSpielfeld = [1, 9, 10, 18, 19, 27, 28, 36, 37, 45, 46, 54, 55, 63, 64, 72, 73, 81, 82, 90];
-    var way;
-    var farbe;
-    var player;
-    var newpos, Spielfeld1;
+    var way, farbe, player, newpos;
     var blockright, blockleft, farbeleft, farberight;
-    var counter = 0;
-    var ROB = false, stage2 = false, stage3 = false;
+    var counter = 0, opcounter;
+    var ROB = false, stage2 = false, stage3 = false, blink = false, verloren = false;
+
+    //holt sich id von farb blöcken
     $(".col").click(function () {
         color = $(this).attr('id');
         personalEnemyColor();
     });
 
+    //ändert je nach id, Farbe von Gegnern
     function personalEnemyColor() {
         switch (color) {
             case ("g"):
@@ -42,6 +38,7 @@ $(function () {
         }
     }
 
+    //erstellt leeres Spielfeld beim laden von Seite
     $(function erstellSpielfeld() {
         for (var i = 1; i < 91; i++) {
             BlockID = "block" + i;
@@ -54,10 +51,15 @@ $(function () {
     });
 
     $("#startb").click(function () {
-        $("#block82").css("background-color", "rgb(255,0,0)");
+
+        //setzt den Spieler in die Mitte von Spielfeld
+        $("#block86").css("background-color", "rgb(255,0,0)");
+        //verhindert das Startknopf mehrfach gedrückt wird
         $(this).prop('disabled', true);
-        $(".col").hide();
-        $("#hcol").hide();
+        //versteckt farbauswahl um Glitch zu verhindern
+        $(".col").hide(); $("#hcol").hide();
+
+        //Bewegungspattern nach links und rechts || verhindert das bewegen in Gegner hinein || 
         document.onkeydown = function checkKey(e) {
             getPlayer();
             blockright = player + 1;
@@ -82,6 +84,7 @@ $(function () {
             }
         }
 
+        //holt sich alle im Spielfeld aktuell befindenen Gegner
         function getHindernisse() {
             Enemys = [];
             for (var i = 1; i < 91; i++) {
@@ -90,6 +93,7 @@ $(function () {
             }
         }
 
+        //holt sich aktuelle Position von Spieler
         function getPlayer() {
             for (var i = 82; i < 91; i++) {
                 farbe = $("#block" + i).css('background-color');
@@ -97,6 +101,7 @@ $(function () {
             }
         }
 
+        //spawnt Gegner mit 1 Block breite
         function spawnEnemy() {
             if (ROB == false) {
                 do {
@@ -109,6 +114,7 @@ $(function () {
             else ROB = false;
         }
 
+        //spawnt Gegner mit 2 Blöcken breite
         function spawnBetterEnemy() {
             if (ROB == false) {
                 betterRandEnemy1 = Math.floor(Math.random() * (9 - 1 + 1) + 1);
@@ -121,29 +127,7 @@ $(function () {
             else ROB = false;
         }
 
-        setInterval(function stageTwo() {
-            stage2 = true;
-        }, 30000);
-
-        setInterval(function stageThree() {
-            getHindernisse();
-            for (var i = 0; i < kleinesSpielfeld.length; i++) $("#block" + kleinesSpielfeld[i]).css("background-color", "black");
-            stage3 = true;
-            linkerRand = 83;
-            rechterRand = 89;
-            if (playerPOS == 82) {
-                $("#block" + playerPOS).css("background-color", "black");
-                ++playerPOS;
-                $("#block" + playerPOS).css("background-color", "rgb(255,0,0)");
-            }
-            if (playerPOS == 90) {
-                $("#block" + playerPOS).css("background-color", "black");
-                --playerPOS;
-                $("#block" + playerPOS).css("background-color", "rgb(255,0,0)");
-            }
-
-        }, 50000);
-
+        //spawnt Gegner mit breite von 3 Blöcken
         function spawnEvenBetterEnemy() {
             if (ROB == false) {
                 betterRandEnemy1 = Math.floor(Math.random() * (9 - 1 + 1) + 1);
@@ -157,6 +141,7 @@ $(function () {
             } else ROB = false;
         }
 
+        //spawnt ROB || Row of Blocks 
         function spawnROB() {
             if (stage3 == true) {
                 range1 = 2;
@@ -177,48 +162,94 @@ $(function () {
             ROB = true;
         }
 
+        //aktiviert Stufe 2
+        setInterval(function stageTwo() {
+            stage2 = true;
+        }, 30000);
+
+        //aktiviert Stufe 3
+        setInterval(function stageThree() {
+            stage3 = true;
+            opcounter = 1;
+        }, 20000);
 
         (function () {
-            timer = function spawn() {
+            timer = function main() {
 
+                //überprüft ob Spieler noch am Leben ist und spawnt verschiedene Gegner
                 if (verloren == false && stage2 == false) {
-
                     randy = Math.floor(Math.random() * (21 - 1 + 1) + 1);
                     if (randy % 3 == 0) spawnBetterEnemy();
                     else if (randy % 7 == 0) spawnEvenBetterEnemy();
-                    else if (randy % 21 == 0 || randy % 20 == 0) spawnROB();
                     else spawnEnemy();
-                    if (timeout >= 100) {
-                        timeout = timeout * .999;
-                    }
-                    points += 10;
-                    $("#scoreboard").html("<h3>Score: " + points + "<h3>");
-
                 }
+
+                //aktiviert zweite Stage || Es wird nur noch ROB gespawnt
                 if (stage2 == true && verloren == false) {
                     counter++;
                     if (counter % 5 == 0) spawnROB();
-                    if (counter % 41 == 0) stage2 = false;
+                    if (counter % 34 == 0) stage2 = false;
                 }
+
+                //aktiviert dritte Stage || Spielfeld wird verkleinert
                 if (stage3 == true && verloren == false) {
-                    counter++;
-                    if (counter % 41 == 0) {
-                        stage3 = false;
-                        linkerRand = 82;
-                        rechterRand = 90;
-                        for (var t = 0; t < kleinesSpielfeld.length; t++) {
-                            $("#block" + kleinesSpielfeld[t]).css("background-color", "grey");
-                        }
-                    }
+                    resizeGame();
+                    normalSize();
                 }
-                if (verloren == true) timeout = 500;
                 animateEnemy();
+
+                //erhöht Punkte
+                points += 10;
+                $("#scoreboard").html("<h3>Score: " + points + "<h3>");
+
+                //beschleunigt die spawnrate 
+                if (timeout >= 100) {
+                    timeout = timeout * .999;
+                }
                 setTimeout(timer, timeout);
             };
             timer();
         })();
 
+        //setzt Spielfeld auf normale Größe zurück
+        function normalSize() {
+            if (opcounter % 21 == 0) {
+                stage3 = false;
+                blink = false;
+                linkerRand = 82;
+                rechterRand = 90;
+                for (var t = 0; t < kleinesSpielfeld.length; t++) {
+                    $("#block" + kleinesSpielfeld[t]).css("background-color", "grey");
+                }
+            }
+        }
 
+        //verkleinert das Spielfeld
+        function resizeGame() {
+            opcounter++;
+            for (var i = 0; i < kleinesSpielfeld.length; i++) {
+                if (opcounter % 2 == 0 && blink == false) $("#block" + kleinesSpielfeld[i]).css("opacity", 1.0);
+                else if (opcounter % 11 == 0) {
+                    blink = true;
+                    $("#block" + kleinesSpielfeld[i]).css("background-color", "black");
+                    if (playerPOS == 82) {
+                        $("#block" + playerPOS).css("background-color", "black");
+                        ++playerPOS;
+                        $("#block" + playerPOS).css("background-color", "rgb(255,0,0)");
+                    }
+                    if (playerPOS == 90) {
+                        $("#block" + playerPOS).css("background-color", "black");
+                        --playerPOS;
+                        $("#block" + playerPOS).css("background-color", "rgb(255,0,0)");
+                    }
+                    linkerRand = 83;
+                    rechterRand = 89;
+                }
+                else if (opcounter % 2 != 0 && blink == false) $("#block" + kleinesSpielfeld[i]).css("opacity", 0.5);
+            }
+        }
+
+        //animiert alle Gegner 
         function animateEnemy() {
             getHindernisse();
             for (var i = 0; i < Enemys.length; i++) {
@@ -228,25 +259,24 @@ $(function () {
             }
         }
 
+        //leert Spielfeld 
         function emptyGame() {
             for (var i = 1; i < 91; i++) {
                 $("#block" + i).css("background-color", "grey");
             }
         }
 
+        //prüft ob Spieler tot ist
         setInterval(function checkDeath() {
             getHindernisse();
             for (var i = 0; i < Enemys.length; i++) {
-                if (playerPOS == Enemys[i] && verloren == false) {
-
-                    verloren = true;
-                    emptyGame();
-                    $("#player").remove();
-                }
+                if (playerPOS == Enemys[i] && verloren == false) verloren = true;
             }
         }, 1);
 
     });
+
+    //wenn Spieler tot ist lade Seite neu
     setInterval(function newgame() {
         if (verloren == true) {
             location.reload();
