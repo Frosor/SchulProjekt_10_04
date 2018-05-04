@@ -3,7 +3,7 @@ $(function () {
     var randEnemy, lastRand;
     var Enemys = [];
     var block, timer, newi;
-    var rechterRand = 90, linkerRand = 82, playerPOS = 86, points = 0;
+    var rechterRand = 90, linkerRand = 1, obererRand = 7, untererRand = 0 ,playerPOS = 86, playerPOSx = 0,playerPOSy = 5; points = 0;
     //umstellen um spawn interval zu verändern
     var timeout = 500;
     //umstellen um Standard Gegner farbe zu ändern
@@ -34,6 +34,18 @@ $(function () {
                 break;
             case ("p"):
                 enemyColor = "rgb(255, 51, 153)";
+                break;
+            case ("s"):
+                enemyColor = "rgb(0, 0, 0)";
+                break;
+            case ("rb"):
+                enemyColor = "rgb(9, 63, 109)";
+                break;
+            case ("rhb"):
+                enemyColor = "rgb(1, 125, 195)";
+                break;
+            case ("fe"):
+                enemyColor = "rgb(227, 0, 27)";
                 break;
         }
     }
@@ -67,19 +79,37 @@ $(function () {
             blockleft = player - 1;
             farbeleft = $("#block" + blockleft).css('background-color');
             if (verloren == false) {
-                if (e.keyCode == '37' && playerPOS > linkerRand && farbeleft != enemyColor) {
+                if (e.keyCode == '37' && playerPOSy > linkerRand && farbeleft != enemyColor) {
                     // links Pfeil
                     $("#block" + player).css("background-color", "grey");
                     newpos = --player;
                     $("#block" + newpos).css("background-color", "rgb(255,0,0)");
+                    playerPOSy--;
                     playerPOS--;
                 }
-                else if (e.keyCode == '39' && playerPOS < rechterRand && farberight != enemyColor) {
+                else if (e.keyCode == '39' && playerPOSy < rechterRand && farberight != enemyColor) {
                     // rechts Pfeil
                     $("#block" + player).css("background-color", "grey");
                     newpos = ++player;
                     $("#block" + newpos).css("background-color", "rgb(255,0,0)");
+                    playerPOSy++;
                     playerPOS++;
+                }
+                else if (e.keyCode == '38' && playerPOSx < obererRand) {
+                    // oben Pfeil
+                    $("#block" + player).css("background-color", "grey");
+                    newpos = player-9;
+                    $("#block" + newpos).css("background-color", "rgb(255,0,0)");
+                    playerPOS = playerPOS - 9;
+                    playerPOSx++;
+                }
+                else if (e.keyCode == '40' && playerPOSx > untererRand) {
+                    // unten Pfeil
+                    $("#block" + player).css("background-color", "grey");
+                    newpos = player+9;
+                    $("#block" + newpos).css("background-color", "rgb(255,0,0)");
+                   playerPOS = playerPOS + 9;
+                    playerPOSx--;
                 }
             }
         }
@@ -95,7 +125,7 @@ $(function () {
 
         //holt sich aktuelle Position von Spieler
         function getPlayer() {
-            for (var i = 82; i < 91; i++) {
+            for (var i = 0; i < 91; i++) {
                 farbe = $("#block" + i).css('background-color');
                 if (farbe == "rgb(255, 0, 0)") { player = i; }
             }
@@ -190,6 +220,8 @@ $(function () {
                     if (counter % 5 == 0) spawnROB();
                     if (counter % 34 == 0) stage2 = false;
                 }
+
+console.log(playerPOS);
 
                 //aktiviert dritte Stage || Spielfeld wird verkleinert
                 if (stage3 == true && verloren == false) {
