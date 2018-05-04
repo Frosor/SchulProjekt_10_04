@@ -168,8 +168,8 @@ $(function () { //Document Ready in Kurz
 		var zeitinsec = (Sekunden / 1000)
 		var zeitinmin = Math.floor(zeitinsec / 60)
 		zeitinsec = zeitinsec - (zeitinmin * 60)
-			$("#gewonnen").show();
-			$("#gewonnen").append("Zeit: " + zeitinmin + " Minuten "+ zeitinsec +" Sekunden");
+		$("#gewonnen").show();
+		$("#gewonnen").append("Zeit: " + zeitinmin + " Minuten "+ zeitinsec +" Sekunden");
 
 	}
 
