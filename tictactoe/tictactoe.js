@@ -24,7 +24,7 @@ $(function () {
 				playercounter++
 			}
 			else {
-				$("#Zeiten").text("Player 1 (Grün) ist an der Reihe.");
+				$("#Zeiten").text("Player 1 (Gruen) ist an der Reihe.");
 				$(this).css("background-color", "yellow");
 				aktuellefarbe = "rgb(255, 255, 0)";
 				checkWin();
@@ -74,7 +74,7 @@ $(function () {
 
 	function gewinner() {
 		if (aktuellefarbe == "rgb(0, 128, 0)" && gewonnen == false) {
-			alert("Grün hat gewonnen!")
+			alert("Gruen hat gewonnen!")
 			gewonnen = true;
 		}
 		else {
