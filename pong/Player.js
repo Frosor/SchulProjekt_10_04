@@ -17,7 +17,7 @@ function Player(number) {
         fill(105);
         rectMode(CENTER);
         rect(this.x, this.y, 20, 150);
-        if (!ball.started) {
+        /*if (!ball.started) {
             fill(0);
             text("Speed", width - (textWidth("Speed") + 55), player1.y - 15);
             text(sliderP1.value(), width - (textWidth(sliderP1.value()) + 90), player1.y - 75);
@@ -34,7 +34,7 @@ function Player(number) {
         else {
             sliderP1.remove();
             sliderP2.remove();
-        }
+        }*/
     }
 
     this.setDir = function (dir) {

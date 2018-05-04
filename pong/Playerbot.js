@@ -12,6 +12,7 @@ function Playerbot() {
     }
 
     this.move = function () {
+
         this.y = ball.y;
     }
 }

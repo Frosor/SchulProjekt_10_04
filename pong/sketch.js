@@ -6,16 +6,16 @@ var sliderP1;
 var sliderP2;
 
 function setup() {
-    cnv = createCanvas(1400, windowHeight - 100);
+    cnv = createCanvas(windowWidth - 100, windowHeight - 100);
     centerCanvas();
 
     ball = new Ball();
     player1 = new Player(1);
-    player2 = new Player(2);
-    //player2 = new Playerbot();
+    //player2 = new Player(2);
+    player2 = new Playerbot();
 
-    sliderP1 = createSlider(1, 20, 10, 1);
-    sliderP2 = createSlider(1, 20, 10, 1);
+    // sliderP1 = createSlider(1, 20, 10, 1);
+    // sliderP2 = createSlider(1, 20, 10, 1);
 }
 
 function draw() {
@@ -69,4 +69,5 @@ function centerCanvas() {
 }
 function windowResized() {
     centerCanvas();
+    location.reload(true);
 }
