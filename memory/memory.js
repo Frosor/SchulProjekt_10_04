@@ -56,9 +56,10 @@ $(function () { //Document Ready in Kurz
 
 		$(".card").click(function () {
 			aktuellesBild = $(this).css("background-image");
-			alert("url(./bilder/rueckseite.png)");
-			if (aktuellesBild == "url(./bilder/rueckseite.png)") {
+			//alert(aktuellesBild);
+			if (aktuellesBild.indexOf('rueckseite') !== -1) {
 				className = $(this).attr('class');
+				console.log('13213')
 
 
 
@@ -139,10 +140,10 @@ $(function () { //Document Ready in Kurz
 
 			aufgedeckt1 = null;
 			aufgedeckt2 = null;
-
-			for (var i = 0; i <= 20; i++) {
-				aktuellesBild = $("#" + i).css("background-image");
-				if (aktuellesBild == 'url(./bilder/rueckseite.png)') {
+			var tempbild;
+			for (var i = 1; i <= 20; i++) {
+				tempbild = $("#" + i);
+				if (tempbild.css("background-image").indexOf('rueckseite') !== -1) {
 					gewonnen = false;
 					break;
 				}
@@ -151,8 +152,6 @@ $(function () { //Document Ready in Kurz
 			}
 
 			if (gewonnen == true) {
-
-				time = new Date();
 				zeitermitteln();
 				$(this).prop("disabled", "false");
 
@@ -162,30 +161,15 @@ $(function () { //Document Ready in Kurz
 	});
 
 	function zeitermitteln() {
-
-		Minuten = time.getMinutes() - Minutenerste;
-		Sekunden = time.getSeconds() - Sekundenerste;
-
-
-		if (time.getSeconds() - Sekundenerste < 0) {
-			Minuten = time.getMinutes - Minutenerste - 1;
-			Sekunden = 60 - Sekundenerste;
-		}
-		else if (time.getSeconds() - Sekundenerste > 60) {
-			Sekunden = 100 - Sekundenerste;
-			Minuten = time.getMinutes - Minutenerste + 1;
-		}
-
-
-		if (Minuten <= 0) {
+		time = new Date();
+		console.log(start);
+		console.log(time)
+		Sekunden = Math.abs(time - start);
+		var zeitinsec = (Sekunden / 1000)
+		var zeitinmin = Math.floor(zeitinsec / 60)
+		zeitinsec = zeitinsec - (zeitinmin * 60)
 			$("#gewonnen").show();
-			$("#gewonnen").append("Zeit: " + Sekunden + " Sekunden");
-		}
-		else {
-			$("#gewonnen").show();
-			$("#gewonnen").append("Zeit: " + Minuten + "." + Sekunden + " Minuten");
-		}
-
+			$("#gewonnen").append("Zeit: " + zeitinmin + " Minuten "+ zeitinsec +" Sekunden");
 
 	}
 
