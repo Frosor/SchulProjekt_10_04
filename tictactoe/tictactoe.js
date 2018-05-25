@@ -1,5 +1,5 @@
 $(function () {
-
+//Deklration und Initialisierung 
 	var playercounter = 0;
 	var farbe1;
 	var farbe2;
@@ -13,7 +13,7 @@ $(function () {
 	var gewonnen = false;
 	var aktuellefarbe;
 
-
+	//Für das anklicken der Felder
 	$(".feld").one("click", function () {
 		if (gewonnen != true) {
 			if (playercounter % 2 == 0) {
@@ -33,7 +33,7 @@ $(function () {
 		}
 
 	});
-
+	//Hier wird der gecheckt ob jemand gewonnen hat
 	function checkWin() {
 		farbe1 = $("#1").css('background-color');
 		farbe2 = $("#2").css('background-color');
@@ -71,7 +71,7 @@ $(function () {
 			gewinner();
 		}
 	}
-
+	//Der Gewinner wird ausgegeben
 	function gewinner() {
 		if (aktuellefarbe == "rgb(0, 128, 0)" && gewonnen == false) {
 			alert("Gruen hat gewonnen!")

@@ -1,4 +1,6 @@
 $(function () { //Document Ready in Kurz
+
+	//Deklaration und Initalisierung
 	var rand;
 	var classKarte;
 	var classBild;
@@ -12,7 +14,6 @@ $(function () { //Document Ready in Kurz
 	var firstClick = true;
 	var start
 	var time;
-	var schonGelöst = [];
 	var clickable = true;
 	var aktuellesBild;
 	var gewonnen = false;
@@ -24,7 +25,7 @@ $(function () { //Document Ready in Kurz
 
 
 	$("#gewonnen").hide();
-
+	//Spielfeld generierung 
 	$("#StartButton").click(function () {
 		$(this).prop("disabled", "true");
 		var back = [1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
@@ -53,16 +54,14 @@ $(function () { //Document Ready in Kurz
 		}
 
 
-
+		//Anklicken von den Karten
 		$(".card").click(function () {
 			aktuellesBild = $(this).css("background-image");
-			//alert(aktuellesBild);
 			if (aktuellesBild.indexOf('rueckseite') !== -1) {
 				className = $(this).attr('class');
-				console.log('13213')
 
 
-
+				//Beim ersten Klick wird die Zeit gestoppt
 				if (firstClick == true) {
 					start = new Date();
 					Minutenerste = start.getMinutes();
@@ -104,15 +103,15 @@ $(function () { //Document Ready in Kurz
 						break;
 
 				}
-
-				if (aufgedeckt1 == null) {
-					aufgedeckt1 = className;
+				//Wenn noch keine Karte aufgedeckt wurde, wird aufgedeckt1 zur aktuellen Karte
+				if (aufgedeckt1 == null) { 
+					aufgedeckt1 = className; 
 					thisName1 = this;
 				}
 				else {
 					aufgedeckt2 = className;
 					thisName2 = this;
-					prüfen();
+					prüfen(); //sobald zwei Karten aufgedeckt wurden, wird auf deren gleichheit geprüft
 				}
 			}
 
@@ -122,25 +121,25 @@ $(function () { //Document Ready in Kurz
 
 
 		});
-
+		//Hier wird geprüft ob beide aufgedckten Karten gleich sind
 		function prüfen() {
 
-
-			if (aufgedeckt1 == aufgedeckt2) {
+			//gleichheit der Karten wird geprüft
+			if (aufgedeckt1 == aufgedeckt2) { //Wenn beide gleich sind werden sie disabled und in das Array schonGelöst gepusht
 				$(thisName1).prop("disabled", true);
 				$(thisName2).prop("disabled", true);
-				schonGelöst.push(thisName1);
-				schonGelöst.push(thisName2);
 
 			}
 			else {
-				$(thisName1).css("background-image", "url(./bilder/rueckseite.png)");
+				$(thisName1).css("background-image", "url(./bilder/rueckseite.png)"); //Wenn Sie nicht gleich sind werden sie wieder verdeckt
 				$(thisName2).css("background-image", "url(./bilder/rueckseite.png)");
 			}
 
 			aufgedeckt1 = null;
 			aufgedeckt2 = null;
 			var tempbild;
+
+			//Hier wird gepürft ob es noch Karten mit der Rückseite gibt, wenn nicht hat man gewonnen 
 			for (var i = 1; i <= 20; i++) {
 				tempbild = $("#" + i);
 				if (tempbild.css("background-image").indexOf('rueckseite') !== -1) {
@@ -160,10 +159,9 @@ $(function () { //Document Ready in Kurz
 
 	});
 
+	//Hier wird die Zeit ermittelt 
 	function zeitermitteln() {
 		time = new Date();
-		console.log(start);
-		console.log(time)
 		Sekunden = Math.abs(time - start);
 		var zeitinsec = (Sekunden / 1000)
 		var zeitinmin = Math.floor(zeitinsec / 60)
